@@ -19,23 +19,66 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <LinearLayout
-        android:layout_width="409dp"
-        android:layout_height="653dp"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        tools:layout_editor_absoluteX="1dp">
-        <include
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            layout="@layout/button_layout"
-            app:layout_constraintTop_toBottomOf="@id/tv_MainTitle"
-            app:layout_constraintBottom_toBottomOf="parent"
-            android:layout_marginTop="60sp"
-            android:layout_marginBottom="60sp"
-            />
+        android:id="@+id/ll_line1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@id/ll_line2"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView">
+
+        <Button
+            android:id="@+id/btn_blue"
+            android:layout_width="0dp"
+            android:layout_height="180dp"
+            android:layout_margin="10dp"
+            android:layout_weight="1"
+            android:background="@drawable/button_blue"
+            android:gravity="center"
+            android:textColor="@android:color/white"
+            android:textSize="20sp"></Button>
+
+        <Button
+            android:id="@+id/btn_green"
+            android:layout_width="0dp"
+            android:layout_height="180dp"
+            android:layout_margin="10dp"
+            android:layout_weight="1"
+            android:background="@drawable/button_green"
+            android:gravity="center"
+            android:textColor="@android:color/white"
+            android:textSize="20sp"></Button>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_line2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/ll_line1">
+
+        <Button
+            android:id="@+id/btn_red"
+            android:layout_width="0dp"
+            android:layout_height="180dp"
+            android:layout_margin="10dp"
+            android:layout_weight="1"
+            android:background="@drawable/button_red"
+            android:gravity="center"
+            android:textColor="@android:color/white"
+            android:textSize="20sp"></Button>
+
+        <Button
+            android:id="@+id/btn_yellow"
+            android:layout_width="0dp"
+            android:layout_height="180dp"
+            android:layout_margin="10dp"
+            android:layout_weight="1"
+            android:background="@drawable/button_yellow"
+            android:gravity="center"
+            android:text="Simon Variant 4"
+            android:textColor="@android:color/white"
+            android:textSize="20sp"></Button>
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
