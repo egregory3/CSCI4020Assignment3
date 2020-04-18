@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         android:fontFamily="cursive"
         android:gravity="center"
-        android:text="Simon Classic"
+        android:text="Simon Rewind"
         android:textColor="@android:color/black"
         android:textSize="55sp"
         app:layout_constraintTop_toTopOf="parent" />
