@@ -5,12 +5,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.media.AudioAttributes;
 import android.media.SoundPool;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Switch;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -18,44 +20,74 @@ import java.util.Random;
 import java.util.Set;
 
 public class simon_classic extends MainActivity {
-    Random randomNumber;
+    final int randomNumber = new Random().nextInt(3);
     private SoundPool sP;
     private Set<Integer> sL;
     ArrayList<Integer> pattern = new ArrayList<Integer>();
-    ArrayList<Integer> CurrentRun = new ArrayList<Integer>();
+    int iterator = 0;
     Button blue;
     Button green;
     Button red;
     Button yellow;
+    Button start;
+    int score;
+    TextView tv_score;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_simon_classic);
+        tv_score = findViewById(R.id.tv_score);
 
         sL=new HashSet<Integer>();
 
-        Button blue = findViewById(R.id.btn_blue);
+        blue = findViewById(R.id.btn_blue);
         addClickEffect(blue);
         blue.setSoundEffectsEnabled(false);
 
-        Button red = findViewById(R.id.btn_red);
+        red = findViewById(R.id.btn_red);
         addClickEffect(red);
         red.setSoundEffectsEnabled(false);
 
-        Button green = findViewById(R.id.btn_green);
+        green = findViewById(R.id.btn_green);
         addClickEffect(green);
         green.setSoundEffectsEnabled(false);
 
-        Button yellow = findViewById(R.id.btn_yellow);
+        yellow = findViewById(R.id.btn_yellow);
         addClickEffect(yellow);
         yellow.setSoundEffectsEnabled(false);
+
+        start = findViewById(R.id.btn_start);
+        start.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                pattern.add(randomNumber);
+                switch(pattern.get(iterator)) {
+                    case 0:{
+                        blue.performClick();
+
+                    }
+                    case 1:{
+                        red.performClick();
+                    }
+                    case 2:{
+                        green.performClick();
+                    }
+                    case 3:{
+                        yellow.performClick();
+                    }
+                }
+            }
+        });
 
         blue.setText("");
         green.setText("");
         red.setText("");
         yellow.setText("");
 
+        Intent i = getIntent();
+        score = i.getIntExtra("score", 0);
+        tv_score.setText(String.valueOf(score));
 
 
 
@@ -129,6 +161,7 @@ public class simon_classic extends MainActivity {
             sL.clear();
         }
     }
+
 
     private void playSound(int soundId) {
         if (sL.contains(soundId)) {

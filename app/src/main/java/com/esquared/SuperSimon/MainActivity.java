@@ -35,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), simon_classic.class);
+                intent.putExtra("Score", 0);
                 startActivity(intent);
             }
         });
