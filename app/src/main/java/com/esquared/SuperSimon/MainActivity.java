@@ -28,10 +28,10 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
 
-        Button blue = findViewById(R.id.btn_blue);
-        addClickEffect(blue);
-
-        blue.setOnClickListener(new View.OnClickListener() {
+        Button green = findViewById(R.id.btn_green);
+        addClickEffect(green);
+        green.setText("Simon Classic");
+        green.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), simon_classic.class);
@@ -42,8 +42,14 @@ public class MainActivity extends AppCompatActivity {
 
         Button red = findViewById(R.id.btn_red);
         addClickEffect(red);
-        Button green = findViewById(R.id.btn_green);
-        addClickEffect(green);
+
+
+        Button blue = findViewById(R.id.btn_blue);
+        addClickEffect(blue);
+
+
+
+
         Button yellow = findViewById(R.id.btn_yellow);
         addClickEffect(yellow);
     }
