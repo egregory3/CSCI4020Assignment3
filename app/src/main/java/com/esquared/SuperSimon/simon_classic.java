@@ -7,6 +7,7 @@ import android.media.AudioAttributes;
 import android.media.SoundPool;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
@@ -20,7 +21,7 @@ import java.util.Random;
 import java.util.Set;
 
 public class simon_classic extends MainActivity {
-    final int randomNumber = new Random().nextInt(3);
+    int randomNumber = new Random().nextInt(4);
     private SoundPool sP;
     private Set<Integer> sL;
     ArrayList<Integer> pattern = new ArrayList<Integer>();
@@ -30,8 +31,16 @@ public class simon_classic extends MainActivity {
     Button red;
     Button yellow;
     Button start;
+    Button flashButton;
     int score;
     TextView tv_score;
+    final Handler handler = new Handler();
+    final Runnable buttonRelease = new Runnable(){
+        public void run(){
+            flashButton.setPressed(false);
+
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,23 +70,42 @@ public class simon_classic extends MainActivity {
         start.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                pattern.add(randomNumber);
+                if (v == start) {
+                    pattern.clear();
+                    pattern.add(randomNumber);
+                }
                 switch(pattern.get(iterator)) {
                     case 0:{
-                        blue.performClick();
+                        flashButton(blue);
+
+                        break;
 
                     }
                     case 1:{
-                        red.performClick();
+                        flashButton(red);
+                        break;
                     }
                     case 2:{
-                        green.performClick();
+                        flashButton(green);
+                        break;
                     }
                     case 3:{
-                        yellow.performClick();
+                        flashButton(yellow);
+                        break;
                     }
                 }
+                randomNumber = new Random().nextInt(4);
+                start.setText("Restart");
             }
+
+            private void flashButton(View v) {
+                flashButton = findViewById(v.getId());
+                v.performClick();
+                v.setPressed(true);
+                handler.postDelayed(buttonRelease, 500);
+            }
+
+
         });
 
         blue.setText("");
