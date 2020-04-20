@@ -21,7 +21,7 @@ import java.util.HashSet;
 import java.util.Random;
 import java.util.Set;
 
-public class simon_classic extends MainActivity {
+public class simon_extreme extends MainActivity {
     int randomNumber = new Random().nextInt(4);
     private SoundPool sP;
     private Set<Integer> sL;
@@ -180,7 +180,7 @@ public class simon_classic extends MainActivity {
                             inPlay = false;
                         }
                     }else{
-                        Toast.makeText(simon_classic.this, "You Lose", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(simon_extreme.this, "You Lose", Toast.LENGTH_SHORT).show();
                     }
                 }
             }
@@ -202,7 +202,7 @@ public class simon_classic extends MainActivity {
                             inPlay = false;
                         }
                     }else{
-                        Toast.makeText(simon_classic.this, "You Lose", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(simon_extreme.this, "You Lose", Toast.LENGTH_SHORT).show();
                     }
                 }
             }
@@ -226,7 +226,7 @@ public class simon_classic extends MainActivity {
                         }
                     }
                 }else{
-                    Toast.makeText(simon_classic.this, "You Lose", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(simon_extreme.this, "You Lose", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -247,7 +247,7 @@ public class simon_classic extends MainActivity {
                             inPlay = false;
                         }
                     }else{
-                        Toast.makeText(simon_classic.this, "You Lose", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(simon_extreme.this, "You Lose", Toast.LENGTH_SHORT).show();
                     }
                 }
             }
