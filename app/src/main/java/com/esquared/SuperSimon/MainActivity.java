@@ -42,10 +42,28 @@ public class MainActivity extends AppCompatActivity {
 
         Button red = findViewById(R.id.btn_red);
         addClickEffect(red);
+        red.setText("Simon Rewind");
+        red.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), simon_rewind.class);
+                intent.putExtra("Score", 0);
+                startActivity(intent);
+            }
+        });
 
 
         Button blue = findViewById(R.id.btn_blue);
         addClickEffect(blue);
+        blue.setText("Simon Extreme");
+        blue.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), simon_extreme.class);
+                intent.putExtra("Score", 0);
+                startActivity(intent);
+            }
+        });
 
 
 
