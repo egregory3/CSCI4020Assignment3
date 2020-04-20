@@ -3,6 +3,7 @@ package com.esquared.SuperSimon;
 import android.media.AudioAttributes;
 import android.media.SoundPool;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -14,35 +15,57 @@ import java.util.Set;
 
 public class simon_rewind extends MainActivity {
     Random randomNumber;
+
     private SoundPool sP;
+
     private Set<Integer> sL;
+
     ArrayList<Integer> pattern = new ArrayList<Integer>();
-    ArrayList<Integer> CurrentRun = new ArrayList<Integer>();
-    Button blue;
-    Button green;
+    ArrayList<Integer> currentRun = new ArrayList<Integer>();
+
     Button red;
+    Button green;
     Button yellow;
+    Button blue;
+
+    int blueId;
+    int greenId;
+    int redId;
+    int yellowId;
+    int roundCount;
+
+    boolean playerTurn;
+
+    double delay;
+
+    int minRandom;
+    int maxRandom;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_simon_classic);
+        setContentView(R.layout.acitivy_simon_rewind);
 
-        sL=new HashSet<Integer>();
+        roundCount = 0;
 
-        Button blue = findViewById(R.id.btn_blue);
+        randomNumber = new Random();
+
+        sL = new HashSet<Integer>();
+
+        blue = findViewById(R.id.btn_blue);
         addClickEffect(blue);
         blue.setSoundEffectsEnabled(false);
 
-        Button red = findViewById(R.id.btn_red);
+
+        red = findViewById(R.id.btn_red);
         addClickEffect(red);
         red.setSoundEffectsEnabled(false);
 
-        Button green = findViewById(R.id.btn_green);
+        green = findViewById(R.id.btn_green);
         addClickEffect(green);
         green.setSoundEffectsEnabled(false);
 
-        Button yellow = findViewById(R.id.btn_yellow);
+        yellow = findViewById(R.id.btn_yellow);
         addClickEffect(yellow);
         yellow.setSoundEffectsEnabled(false);
 
@@ -51,7 +74,17 @@ public class simon_rewind extends MainActivity {
         red.setText("");
         yellow.setText("");
 
+        Button start = findViewById(R.id.startButton);
+        start.setSoundEffectsEnabled(false);
+        start.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
+                startGame();
+
+
+            }
+        });
 
 
     }
@@ -80,7 +113,7 @@ public class simon_rewind extends MainActivity {
             }
         });
 
-        final int blueId =sP.load(this, R.raw.blue, 1);
+        blueId = sP.load(this, R.raw.blue, 1);
         findViewById(R.id.btn_blue).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -88,7 +121,7 @@ public class simon_rewind extends MainActivity {
             }
         });
 
-        final int greenId =sP.load(this, R.raw.green, 1);
+        greenId = sP.load(this, R.raw.green, 1);
         findViewById(R.id.btn_green).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -96,7 +129,7 @@ public class simon_rewind extends MainActivity {
             }
         });
 
-        final int redId =sP.load(this, R.raw.red, 1);
+        redId = sP.load(this, R.raw.red, 1);
         findViewById(R.id.btn_red).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -104,7 +137,7 @@ public class simon_rewind extends MainActivity {
             }
         });
 
-        final int yellowId =sP.load(this, R.raw.yellow, 1);
+        yellowId = sP.load(this, R.raw.yellow, 1);
         findViewById(R.id.btn_yellow).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -119,16 +152,103 @@ public class simon_rewind extends MainActivity {
         super.onPause();
         if (sP != null) {
             sP.release();
-            sP= null;
+            sP = null;
 
             sL.clear();
         }
     }
 
+
+    private void startGame() {
+
+        playerTurn = false;
+
+        delay = 0;
+
+        minRandom = 1;
+        maxRandom = 4;
+
+        int i = randomNumber.nextInt((maxRandom - minRandom) + 1) + minRandom;
+        currentRun.add(i);
+        for (int j = 0; j < currentRun.size(); j++) {
+
+
+            i = currentRun.get(j);
+
+            if (i == 1)
+                pressGreen();
+            if (i == 2)
+                pressRed();
+            if (i == 3)
+                pressBlue();
+            if (i == 4)
+                pressYellow();
+
+
+        }
+        roundCount++;
+        Log.i("ROUNDS", "The number of rounds is  " + roundCount);
+    }
+
+
+    //function to play sound attached to soundId
     private void playSound(int soundId) {
         if (sL.contains(soundId)) {
             sP.play(soundId, 1.0f, 1.0f, 0, 0, 1.0f);
         }
     }
+
+    //action taken when random selection is green button
+    private void pressGreen() {
+
+        green.setPressed(true);
+        playSound(greenId);
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            public void run() {
+                green.setPressed(false);
+            }
+        }, 500);
+    }
+
+    //action taken when random selection is red button
+    private void pressRed() {
+
+        red.setPressed(true);
+        playSound(redId);
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            public void run() {
+                red.setPressed(false);
+            }
+        }, 500);
+    }
+
+    //action taken when random selection is blue button
+    private void pressBlue() {
+
+        blue.setPressed(true);
+        playSound(blueId);
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            public void run() {
+                blue.setPressed(false);
+            }
+        }, 500);
+    }
+
+    //action taken when random selection is blue;
+    private void pressYellow() {
+
+        yellow.setPressed(true);
+        playSound(yellowId);
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            public void run() {
+                yellow.setPressed(false);
+            }
+        }, 550);
+    }
+
 
 }
