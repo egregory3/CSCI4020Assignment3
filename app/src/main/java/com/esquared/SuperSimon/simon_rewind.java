@@ -7,13 +7,14 @@ import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Random;
 import java.util.Set;
 
-public class simon_rewind extends MainActivity {
+public class simon_rewind extends MainActivity   {
     Random randomNumber;
 
     private SoundPool sP;
@@ -22,6 +23,9 @@ public class simon_rewind extends MainActivity {
 
     ArrayList<Integer> pattern = new ArrayList<Integer>();
     ArrayList<Integer> currentRun = new ArrayList<Integer>();
+    final ArrayList<Integer> tempArrayList = new ArrayList<Integer>();
+
+    boolean gameOver=false;
 
     Button red;
     Button green;
@@ -36,7 +40,6 @@ public class simon_rewind extends MainActivity {
 
     boolean playerTurn;
 
-    double delay;
 
     int minRandom;
     int maxRandom;
@@ -52,20 +55,20 @@ public class simon_rewind extends MainActivity {
 
         sL = new HashSet<Integer>();
 
-        blue = findViewById(R.id.btn_blue);
+        blue = findViewById(R.id.btn_blue1);
         addClickEffect(blue);
         blue.setSoundEffectsEnabled(false);
 
 
-        red = findViewById(R.id.btn_red);
+        red = findViewById(R.id.btn_red1);
         addClickEffect(red);
         red.setSoundEffectsEnabled(false);
 
-        green = findViewById(R.id.btn_green);
+        green = findViewById(R.id.btn_green1);
         addClickEffect(green);
         green.setSoundEffectsEnabled(false);
 
-        yellow = findViewById(R.id.btn_yellow);
+        yellow = findViewById(R.id.btn_yellow1);
         addClickEffect(yellow);
         yellow.setSoundEffectsEnabled(false);
 
@@ -79,10 +82,7 @@ public class simon_rewind extends MainActivity {
         start.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 startGame();
-
-
             }
         });
 
@@ -114,33 +114,45 @@ public class simon_rewind extends MainActivity {
         });
 
         blueId = sP.load(this, R.raw.blue, 1);
-        findViewById(R.id.btn_blue).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.btn_blue1).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                int temp=2;
                 playSound(blueId);
+                tempArrayList.add(temp);
+                Toast.makeText(simon_rewind.this, "Button Press Added2", Toast.LENGTH_SHORT).show();
             }
         });
 
         greenId = sP.load(this, R.raw.green, 1);
-        findViewById(R.id.btn_green).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.btn_green1).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                int temp=0;
                 playSound(greenId);
+                tempArrayList.add(temp);
+                Toast.makeText(simon_rewind.this, "Button Press Added0", Toast.LENGTH_SHORT).show();
             }
         });
 
         redId = sP.load(this, R.raw.red, 1);
-        findViewById(R.id.btn_red).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.btn_red1).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                int temp=1;
+                tempArrayList.add(temp);
+                Toast.makeText(simon_rewind.this, "Button Press Added1", Toast.LENGTH_SHORT).show();
                 playSound(redId);
             }
         });
 
         yellowId = sP.load(this, R.raw.yellow, 1);
-        findViewById(R.id.btn_yellow).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.btn_yellow1).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                int temp=3;
+                tempArrayList.add(temp);
+                Toast.makeText(simon_rewind.this, "Button Press Added3", Toast.LENGTH_SHORT).show();
                 playSound(yellowId);
             }
         });
@@ -160,36 +172,78 @@ public class simon_rewind extends MainActivity {
 
 
     private void startGame() {
-
-        playerTurn = false;
-
-        delay = 0;
-
-        minRandom = 1;
-        maxRandom = 4;
-
-        int i = randomNumber.nextInt((maxRandom - minRandom) + 1) + minRandom;
-        currentRun.add(i);
-        for (int j = 0; j < currentRun.size(); j++) {
+            roundCount=0;
 
 
-            i = currentRun.get(j);
+            roundCount++;
+            Log.i("ROUNDS", "The number of rounds is  " + roundCount);
 
-            if (i == 1)
-                pressGreen();
-            if (i == 2)
-                pressRed();
-            if (i == 3)
-                pressBlue();
-            if (i == 4)
-                pressYellow();
+            playerTurn = false;
+
+            int i = randomNumber.nextInt(4);
+            pattern.add(i);
+            playPattern();
+            tempArrayList.clear();
+            Toast.makeText(simon_rewind.this, "Start User Input", Toast.LENGTH_SHORT).show();
+            Handler handler = new Handler();
+            handler.postDelayed(new Runnable() {
+                public void run() {
+                    userInput();
+                }
+            }, (1500 * roundCount));
 
 
-        }
-        roundCount++;
-        Log.i("ROUNDS", "The number of rounds is  " + roundCount);
+
     }
 
+    private void userInput(){
+
+        for(int i=0;i<pattern.size();i++) {
+            final int temp=i;
+            Handler handler = new Handler();
+            handler.postDelayed(new Runnable() {
+                public void run() {
+
+                    if(tempArrayList.get(temp)==pattern.get(temp))
+                    {
+                        Toast.makeText(simon_rewind.this, "Round Cleared", Toast.LENGTH_SHORT).show();
+                    }
+                    if(tempArrayList.get(temp)!=pattern.get(temp))
+                    {
+                        Toast.makeText(simon_rewind.this, "You Lose", Toast.LENGTH_SHORT).show();
+                        gameOver=true;
+                    }
+
+                }
+            }, 2500);
+
+        }
+    }
+
+    private void playPattern(){
+
+        double delay = 1;
+        double defaultWaitTime=600;
+        for(int i =0; i< pattern.size();i++)
+        {
+            final int temp = pattern.get(i);
+            Handler handler = new Handler();
+            handler.postDelayed(new Runnable() {
+                public void run() {
+                    if (temp == 0)
+                        pressGreen();
+                    if (temp == 1)
+                        pressRed();
+                    if (temp == 2)
+                        pressBlue();
+                    if (temp== 3)
+                        pressYellow();
+                }
+            }, (long) (delay*defaultWaitTime));
+            delay++;
+        }
+
+    }
 
     //function to play sound attached to soundId
     private void playSound(int soundId) {
@@ -239,7 +293,6 @@ public class simon_rewind extends MainActivity {
 
     //action taken when random selection is blue;
     private void pressYellow() {
-
         yellow.setPressed(true);
         playSound(yellowId);
         Handler handler = new Handler();
@@ -247,8 +300,10 @@ public class simon_rewind extends MainActivity {
             public void run() {
                 yellow.setPressed(false);
             }
-        }, 550);
+        }, 500);
     }
+
+
 
 
 }
