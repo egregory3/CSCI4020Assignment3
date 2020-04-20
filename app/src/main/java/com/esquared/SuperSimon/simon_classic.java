@@ -178,9 +178,9 @@ public class simon_classic extends MainActivity {
                             iterator = 0;
                             handler.postDelayed(advance, 1000);
                             inPlay = false;
-                        }else{
-                            Toast.makeText(simon_classic.this, "You Lose", Toast.LENGTH_SHORT).show();
                         }
+                    }else{
+                        Toast.makeText(simon_classic.this, "You Lose", Toast.LENGTH_SHORT).show();
                     }
                 }
             }
@@ -200,9 +200,9 @@ public class simon_classic extends MainActivity {
                             iterator = 0;
                             handler.postDelayed(advance, 1000);
                             inPlay = false;
-                        }else{
-                            Toast.makeText(simon_classic.this, "You Lose", Toast.LENGTH_SHORT).show();
                         }
+                    }else{
+                        Toast.makeText(simon_classic.this, "You Lose", Toast.LENGTH_SHORT).show();
                     }
                 }
             }
@@ -224,9 +224,9 @@ public class simon_classic extends MainActivity {
                             handler.postDelayed(advance, 1000);
                             inPlay = false;
                         }
-                    }else{
-                        Toast.makeText(simon_classic.this, "You Lose", Toast.LENGTH_SHORT).show();
                     }
+                }else{
+                    Toast.makeText(simon_classic.this, "You Lose", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -245,9 +245,9 @@ public class simon_classic extends MainActivity {
                             iterator = 0;
                             handler.postDelayed(advance, 1000);
                             inPlay = false;
-                        }else{
-                            Toast.makeText(simon_classic.this, "You Lose", Toast.LENGTH_SHORT).show();
                         }
+                    }else{
+                        Toast.makeText(simon_classic.this, "You Lose", Toast.LENGTH_SHORT).show();
                     }
                 }
             }
