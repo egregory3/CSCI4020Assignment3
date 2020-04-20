@@ -14,6 +14,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Switch;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -41,6 +42,14 @@ public class simon_classic extends MainActivity {
 
         }
     };
+    final Runnable advance = new Runnable(){
+
+        @Override
+        public void run() {
+            advancePlay();
+        }
+    };
+    Boolean inPlay = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,32 +79,41 @@ public class simon_classic extends MainActivity {
         start.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                startPlay(v);
+            }
+
+            private void startPlay(View v) {
                 if (v == start) {
                     pattern.clear();
                     pattern.add(randomNumber);
+                    iterator = 0;
                 }
                 switch(pattern.get(iterator)) {
                     case 0:{
                         flashButton(blue);
-
+                        inPlay = true;
                         break;
 
                     }
                     case 1:{
                         flashButton(red);
+                        inPlay = true;
                         break;
                     }
                     case 2:{
                         flashButton(green);
+                        inPlay = true;
                         break;
                     }
                     case 3:{
                         flashButton(yellow);
+                        inPlay = true;
                         break;
                     }
                 }
                 randomNumber = new Random().nextInt(4);
                 start.setText("Restart");
+
             }
 
             private void flashButton(View v) {
@@ -120,6 +138,7 @@ public class simon_classic extends MainActivity {
 
 
     }
+
 
     public void onResume() {
 
@@ -150,6 +169,20 @@ public class simon_classic extends MainActivity {
             @Override
             public void onClick(View v) {
                 playSound(blueId);
+                if(inPlay == true){
+                    if (pattern.get(iterator) == 0){
+                        if (iterator < pattern.size()){
+                            iterator ++;
+                        }
+                        if (iterator ==  pattern.size()){
+                            iterator = 0;
+                            handler.postDelayed(advance, 1000);
+                            inPlay = false;
+                        }else{
+                            Toast.makeText(simon_classic.this, "You Lose", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                }
             }
         });
 
@@ -158,6 +191,20 @@ public class simon_classic extends MainActivity {
             @Override
             public void onClick(View v) {
                 playSound(greenId);
+                if(inPlay == true){
+                    if (pattern.get(iterator) == 2){
+                        if (iterator < pattern.size()){
+                            iterator ++;
+                        }
+                        if (iterator ==  pattern.size()){
+                            iterator = 0;
+                            handler.postDelayed(advance, 1000);
+                            inPlay = false;
+                        }else{
+                            Toast.makeText(simon_classic.this, "You Lose", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                }
             }
         });
 
@@ -166,6 +213,21 @@ public class simon_classic extends MainActivity {
             @Override
             public void onClick(View v) {
                 playSound(redId);
+                if(inPlay == true){
+
+                    if (pattern.get(iterator) == 1){
+                        if (iterator < pattern.size()){
+                            iterator ++;
+                        }
+                        if (iterator ==  pattern.size()){
+                            iterator = 0;
+                            handler.postDelayed(advance, 1000);
+                            inPlay = false;
+                        }
+                    }else{
+                        Toast.makeText(simon_classic.this, "You Lose", Toast.LENGTH_SHORT).show();
+                    }
+                }
             }
         });
 
@@ -174,6 +236,20 @@ public class simon_classic extends MainActivity {
             @Override
             public void onClick(View v) {
                 playSound(yellowId);
+                if(inPlay == true){
+                    if (pattern.get(iterator) == 3){
+                        if (iterator < pattern.size()){
+                            iterator ++;
+                        }
+                        if (iterator ==  pattern.size()){
+                            iterator = 0;
+                            handler.postDelayed(advance, 1000);
+                            inPlay = false;
+                        }else{
+                            Toast.makeText(simon_classic.this, "You Lose", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                }
             }
         });
 
@@ -197,4 +273,38 @@ public class simon_classic extends MainActivity {
         }
     }
 
+    private void advancePlay() {
+        randomNumber = new Random().nextInt(4);
+        pattern.add(randomNumber);
+        inPlay = false;
+        switch(pattern.get(pattern.size()-1)) {
+            case 0:{
+                flashButton(blue);
+
+                break;
+
+            }
+            case 1:{
+                flashButton(red);
+                break;
+            }
+            case 2:{
+                flashButton(green);
+                break;
+            }
+            case 3:{
+                flashButton(yellow);
+                break;
+            }
+        }
+        randomNumber = new Random().nextInt(4);
+        inPlay = true;
+    }
+
+    private void flashButton(View v) {
+        flashButton = findViewById(v.getId());
+        v.performClick();
+        v.setPressed(true);
+        handler.postDelayed(buttonRelease, 500);
+    }
 }
