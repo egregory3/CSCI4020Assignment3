@@ -28,29 +28,30 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView">
 
-        <Button
+        <ImageView
             android:id="@+id/btn_green1"
             android:layout_width="0dp"
             android:layout_height="180dp"
             android:layout_margin="10dp"
             android:layout_weight="1"
-            android:background="@drawable/button_green"
+            app:srcCompat="@drawable/button_green"
+            android:clickable="true"
             android:gravity="center"
             android:tag="0"
             android:textColor="@android:color/white"
-            android:textSize="20sp"></Button>
+            android:textSize="20sp"></ImageView>
 
-        <Button
+        <ImageView
             android:id="@+id/btn_red1"
             android:layout_width="0dp"
             android:layout_height="180dp"
             android:layout_margin="10dp"
             android:layout_weight="1"
             android:background="@drawable/button_red"
-            android:gravity="center"
+            android:clickable="true"
             android:tag="1"
-            android:textColor="@android:color/white"
-            android:textSize="20sp"></Button>
+
+            ></ImageView>
 
 
     </LinearLayout>
@@ -69,21 +70,24 @@
             android:layout_margin="10dp"
             android:layout_weight="1"
             android:background="@drawable/button_yellow"
+            android:clickable="true"
             android:gravity="center"
             android:tag="3"
             android:textColor="@android:color/white"
             android:textSize="20sp"></ImageView>
-        <Button
+
+        <ImageView
             android:id="@+id/btn_blue1"
             android:layout_width="0dp"
             android:layout_height="180dp"
             android:layout_margin="10dp"
             android:layout_weight="1"
             android:background="@drawable/button_blue"
+            android:clickable="true"
             android:gravity="center"
             android:tag="2"
             android:textColor="@android:color/white"
-            android:textSize="20sp"></Button>
+            android:textSize="20sp"></ImageView>
     </LinearLayout>
 
 

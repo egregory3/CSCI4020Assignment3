@@ -9,8 +9,11 @@ import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import java.io.IOError;
 import java.io.IOException;
@@ -24,24 +27,26 @@ import java.util.TimerTask;
 
 import static android.view.View.*;
 
-public class simon_rewind extends MainActivity {
+public class simon_rewind extends AppCompatActivity implements View.OnClickListener{
 
-    private Button[] buttons;
-    private Button green;
-    private Button red;
-    private Button blue;
-    private Button yellow;
+    private View[] views;
+
+    private ArrayList<Integer> simonsPattern;
+    private ImageView green;
+    private ImageView red;
+    private ImageView blue;
+    private ImageView yellow;
+    private int placeHolder;
 
     private Button start;
 
-    private ArrayList<Integer> simonsPattern;
+
 
     private Boolean userTurn;
 
-    private int placeHolder;
 
-    private Random random;
 
+    private Random random=new Random();
     private Handler handler;
 
     @Override
@@ -56,25 +61,30 @@ public class simon_rewind extends MainActivity {
         blue = findViewById(R.id.btn_blue1);
         yellow = findViewById(R.id.btn_yellow1);
         start = findViewById(R.id.btnStart1);
-
-        buttons=new Button[]{green,red,blue,yellow};
-        for(int i=0;i<buttons.length;i++){
-            buttons[i].setOnClickListener(new OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if(userTurn){
-                        if(checkPattern(simonsPattern,placeHolder,v)){
-                            nextRound();
-                        }else{
-                            gameOver();
-                        }
+        start.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        playPattern();
                     }
-                }
-            });
+                }, 1500);
+            }
+
+        });
+
+        views=new View[]{green,red,blue,yellow};
+        for(int i=0;i<views.length;i++){
+           views[i].setOnClickListener(this);
         }
 
         placeHolder=0;
         userTurn=false;
+
+        addRandom();
+
         handler = new Handler();
         handler.postDelayed(new Runnable() {
             @Override
@@ -83,6 +93,7 @@ public class simon_rewind extends MainActivity {
             }
         }, 1500);
     }
+
     public void playPattern(){
         switch(simonsPattern.get(placeHolder)) {
             case 0:{
@@ -120,54 +131,66 @@ public class simon_rewind extends MainActivity {
 
     //Animation and sound for the green button
     private void pressGreen(){
-        green.setPressed(true);
+        green.setImageResource(R.drawable.button_green_down);
         //playSound
         handler = new Handler();
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                green.setPressed(false);
+                green.setImageResource(R.drawable.button_green);
             }
         },600);
     }
 
     //Animation and sound for the red button
     private void pressRed(){
-        red.setPressed(true);
+        red.setImageResource(R.drawable.button_red_down);
         //playSound
         handler = new Handler();
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                red.setPressed(false);
+                red.setImageResource(R.drawable.button_red);
             }
         },600);
     }
 
     //Animation and sound for the blue button
     private void pressBlue(){
-        blue.setPressed(true);
+        blue.setImageResource(R.drawable.button_blue_down);
         //playSound
         handler = new Handler();
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                blue.setPressed(false);
+                blue.setImageResource(R.drawable.button_blue);
             }
         },600);
     }
 
    //Animation and sound for the yellow button
     private void pressYellow(){
-        yellow.setPressed(true);
+        yellow.setImageResource(R.drawable.button_yellow_down);
         //playSound
         handler = new Handler();
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                yellow.setPressed(false);
+                yellow.setImageResource(R.drawable.button_yellow);
             }
         },600);
+    }
+
+    @Override
+    public void onClick(View view) {
+        if (userTurn==true) {
+            if (checkPattern(simonsPattern,placeHolder,view)){
+                nextRound();
+            }else {
+                gameOver();
+            }
+            //getSound(view);
+        }
     }
 
     private void addRandom(){
