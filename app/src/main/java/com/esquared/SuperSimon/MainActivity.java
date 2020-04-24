@@ -66,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
                 });
                 final AlertDialog rewindAlert = dialog.create();
                 rewindAlert.show();
-=
+
             }
         });
 

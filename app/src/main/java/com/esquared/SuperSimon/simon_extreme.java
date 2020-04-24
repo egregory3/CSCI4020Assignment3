@@ -42,7 +42,6 @@ public class simon_extreme extends MainActivity implements View.OnClickListener 
     private int yellowID;
     private int purpleID;
     private int orangeID;
-    private Handler handler;
     private int score = 0;
     private TextView scoreTV;
     private Button home;
