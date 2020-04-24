@@ -55,7 +55,6 @@ public class simon_extreme extends MainActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_simon_classic);
-        tv_score = findViewById(R.id.tv_score);
 
         sL=new HashSet<Integer>();
 
@@ -75,7 +74,7 @@ public class simon_extreme extends MainActivity {
         addClickEffect(yellow);
         yellow.setSoundEffectsEnabled(false);
 
-        start = findViewById(R.id.btn_start);
+
         start.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
