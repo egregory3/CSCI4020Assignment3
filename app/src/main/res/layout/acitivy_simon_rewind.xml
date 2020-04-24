@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".simon_classic"
-    android:background="@android:color/darker_gray">
+    android:background="@android:color/darker_gray"
+    tools:context=".simon_rewind">
 
     <TextView
         android:id="@+id/textView"
@@ -16,27 +16,92 @@
         android:text="Simon Rewind"
         android:textColor="@android:color/black"
         android:textSize="55sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <include
-        android:id="@+id/include"
-        layout="@layout/button_layout"
+    <LinearLayout
+        android:id="@+id/ll_line3"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
+        app:layout_constraintTop_toBottomOf="@+id/textView">
 
-    <Button
-        android:id="@+id/startButton"
+        <ImageView
+            android:id="@+id/btn_green1"
+            android:layout_width="0dp"
+            android:layout_height="180dp"
+            android:layout_margin="10dp"
+            android:layout_weight="1"
+            android:clickable="true"
+            android:gravity="center"
+            android:tag="1"
+            android:textColor="@android:color/white"
+            android:textSize="20sp"
+            app:srcCompat="@drawable/button_green"></ImageView>
+
+        <ImageView
+            android:id="@+id/btn_red1"
+            android:layout_width="0dp"
+            android:layout_height="180dp"
+            android:layout_margin="10dp"
+            android:layout_weight="1"
+            android:background="@drawable/button_red"
+            android:clickable="true"
+            android:tag="2"
+
+            ></ImageView>
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_line4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ll_line3">
+
+        <ImageView
+            android:id="@+id/btn_yellow1"
+            android:layout_width="0dp"
+            android:layout_height="180dp"
+            android:layout_margin="10dp"
+            android:layout_weight="1"
+            android:background="@drawable/button_yellow"
+            android:clickable="true"
+            android:gravity="center"
+            android:tag="4"
+            android:textColor="@android:color/white"
+            android:textSize="20sp"></ImageView>
+
+        <ImageView
+            android:id="@+id/btn_blue1"
+            android:layout_width="0dp"
+            android:layout_height="180dp"
+            android:layout_margin="10dp"
+            android:layout_weight="1"
+            android:background="@drawable/button_blue"
+            android:clickable="true"
+            android:gravity="center"
+            android:tag="3"
+            android:textColor="@android:color/white"
+            android:textSize="20sp"></ImageView>
+    </LinearLayout>
+
+
+    <TextView
+        android:id="@+id/playerStatusTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="96dp"
-        android:text="Start"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:text="Simons Turn"
+        android:textAlignment="center"
+        android:textSize="30sp"
+        android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/include" />
+        app:layout_constraintTop_toBottomOf="@+id/ll_line4" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
