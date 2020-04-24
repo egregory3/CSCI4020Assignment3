@@ -306,4 +306,6 @@ public class simon_extreme extends MainActivity {
         v.setPressed(true);
         handler.postDelayed(buttonRelease, 500);
     }
+
+
 }

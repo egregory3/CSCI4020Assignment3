@@ -1,12 +1,15 @@
 package com.esquared.SuperSimon;
 
+import android.content.Intent;
 import android.media.AudioAttributes;
 import android.media.SoundPool;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -31,13 +34,26 @@ public class simon_rewind extends MainActivity implements View.OnClickListener {
     private int greenID;
     private int yellowID;
     private Handler handler;
+    int score = 0;
+    TextView scoreTV;
+    Button home;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.acitivy_simon_rewind);
-
+        scoreTV = findViewById(R.id.textView2);
         simonsPattern = new ArrayList<>();
+        home = findViewById(R.id.buttonHome);
+        home = findViewById(R.id.buttonHome);
+        home.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                startActivity(intent);
+
+            }
+        });
 
         red = findViewById(R.id.btn_red1);
         blue = findViewById(R.id.btn_blue1);
@@ -158,7 +174,9 @@ public class simon_rewind extends MainActivity implements View.OnClickListener {
                 Toast.makeText(simon_rewind.this, "End Of Game", Toast.LENGTH_SHORT).show();
             }
         }, 200);
-
+        ZeroScore();
+        scoreTV.setText(String.valueOf(score));
+        home.setVisibility(View.VISIBLE);
     }
 
     private void nextRound() {
@@ -173,6 +191,8 @@ public class simon_rewind extends MainActivity implements View.OnClickListener {
             }, 1000);
             indice = 0;
             userTurn = false;
+            AddToScore();
+            scoreTV.setText(String.valueOf(score));
             disableUserInput(views);
             increaseSimonPattern(simonsPattern);
             (new Handler()).postDelayed(new Runnable() {
@@ -285,5 +305,15 @@ public class simon_rewind extends MainActivity implements View.OnClickListener {
         if (soundsLoaded.contains(soundId)) {
             soundPool.play(soundId, 1.0f, 1.0f, 0, 0, 1.0f);
         }
+    }
+    private int AddToScore(){
+        score++;
+        scoreTV.setText(String.valueOf(score));
+        return score;
+    }
+    private int ZeroScore(){
+        score=0;
+        scoreTV.setText(String.valueOf(score));
+        return score;
     }
 }
