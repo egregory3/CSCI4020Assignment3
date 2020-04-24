@@ -46,8 +46,7 @@ public class MainActivity extends AppCompatActivity {
         red.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), simon_rewind.class);
-                intent.putExtra("Score", 0);
+                Intent intent = new Intent(getApplicationContext(),simon_rewind.class);
                 startActivity(intent);
             }
         });
@@ -55,17 +54,6 @@ public class MainActivity extends AppCompatActivity {
 
         Button blue = findViewById(R.id.btn_blue);
         addClickEffect(blue);
-        blue.setText("Simon Extreme");
-        blue.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), simon_extreme.class);
-                intent.putExtra("Score", 0);
-                startActivity(intent);
-            }
-        });
-
-
 
 
         Button yellow = findViewById(R.id.btn_yellow);
