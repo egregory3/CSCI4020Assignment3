@@ -1,3 +1,8 @@
+//Eric Gregory and Eric Raymond
+//CSCI 4020, Fall 2020
+//Professor John Nicholson
+//Assignment 3
+
 package com.esquared.SuperSimon;
 
 import android.media.AudioAttributes;

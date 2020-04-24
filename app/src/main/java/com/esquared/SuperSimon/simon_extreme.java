@@ -1,3 +1,8 @@
+//Eric Gregory and Eric Raymond
+//CSCI 4020, Fall 2020
+//Professor John Nicholson
+//Assignment 3
+
 package com.esquared.SuperSimon;
 
 import android.media.AudioAttributes;
@@ -16,24 +21,24 @@ import java.util.Random;
 public class simon_extreme extends MainActivity implements View.OnClickListener {
 
     private ArrayList<Integer> simonsPattern;
+    private View[] views;
+    private HashSet<Integer> soundsLoaded;
+    private Handler handler;
+    private SoundPool soundPool;
+    private ImageView green;
     private ImageView red;
     private ImageView blue;
-    private ImageView green;
     private ImageView yellow;
     private ImageView purple;
     private ImageView orange;
-    private View[] views;
     private int indice;
     private boolean userTurn;
-    private SoundPool soundPool;
-    private HashSet<Integer> soundsLoaded;
+    private int greenID;
     private int redID;
     private int blueID;
-    private int greenID;
     private int yellowID;
     private int purpleID;
     private int orangeID;
-    private Handler handler;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
