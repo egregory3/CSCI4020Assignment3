@@ -1,11 +1,13 @@
 package com.esquared.SuperSimon;
 
+import android.content.Intent;
 import android.media.AudioAttributes;
 import android.media.SoundPool;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -32,11 +34,20 @@ public class simon_surprise extends MainActivity implements View.OnClickListener
     private Handler handler;
     private int score = 0;
     private TextView scoreTV;
+    Button home;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_simon_surprise);
+        home = findViewById(R.id.buttonHomeSS);
+        home.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                startActivity(intent);
+            }
+        });
 
         scoreTV = findViewById(R.id.tv_score);
         simonsPattern = new ArrayList<>();
@@ -159,6 +170,7 @@ public class simon_surprise extends MainActivity implements View.OnClickListener
             }
         }, 200);
         ZeroScore();
+        home.setVisibility(View.VISIBLE);
 
     }
 
