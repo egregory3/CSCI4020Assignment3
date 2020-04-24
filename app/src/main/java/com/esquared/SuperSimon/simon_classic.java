@@ -9,7 +9,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
-import android.view.MotionEvent;
+
 import android.view.View;
 import android.widget.Button;
 import android.widget.Switch;
@@ -25,31 +25,31 @@ public class simon_classic extends MainActivity {
     int randomNumber = new Random().nextInt(4);
     private SoundPool sP;
     private Set<Integer> sL;
-    ArrayList<Integer> pattern = new ArrayList<Integer>();
-    int iterator = 0;
-    Button blue;
-    Button green;
-    Button red;
-    Button yellow;
-    Button start;
-    Button flashButton;
-    int score;
-    TextView tv_score;
-    final Handler handler = new Handler();
-    final Runnable buttonRelease = new Runnable(){
+   private ArrayList<Integer> pattern = new ArrayList<Integer>();
+  private  int iterator = 0;
+   private Button blue;
+   private Button green;
+   private Button red;
+    private Button yellow;
+    private Button start;
+    private Button flashButton;
+    private  int score;
+    private  TextView tv_score;
+    private final Handler handler = new Handler();
+    private final Runnable buttonRelease = new Runnable(){
         public void run(){
             flashButton.setPressed(false);
 
         }
     };
-    final Runnable advance = new Runnable(){
+    private final Runnable advance = new Runnable(){
 
         @Override
         public void run() {
             advancePlay();
         }
     };
-    Boolean inPlay = false;
+    private Boolean inPlay = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

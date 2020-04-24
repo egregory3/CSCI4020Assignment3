@@ -38,7 +38,7 @@ public class simon_rewind extends MainActivity implements View.OnClickListener {
         setContentView(R.layout.acitivy_simon_rewind);
 
         simonsPattern = new ArrayList<>();
-        
+
         red = findViewById(R.id.btn_red1);
         blue = findViewById(R.id.btn_blue1);
         green = findViewById(R.id.btn_green1);
@@ -117,7 +117,7 @@ public class simon_rewind extends MainActivity implements View.OnClickListener {
             }, 1500);
         } else {
             //Reverse the array
-           // reversedPattern=reversePattern(simonsPattern);
+            reversedPattern=reversePattern(simonsPattern);
             userTurn = true;
             enableUserInput(views);
             indice = 0;
@@ -183,7 +183,7 @@ public class simon_rewind extends MainActivity implements View.OnClickListener {
             }, 2000);
         }
     }
-    
+
     @Override
     protected void onPause() {
         super.onPause();
@@ -267,7 +267,7 @@ public class simon_rewind extends MainActivity implements View.OnClickListener {
         simonsPattern.add(value);
     }
 
-   private void disableUserInput(View[] v) {
+    private void disableUserInput(View[] v) {
         for (int i = 0; i < v.length; i++) {
             v[i].setEnabled(false);
         }
