@@ -5,13 +5,16 @@
 
 package com.esquared.SuperSimon;
 
+import android.content.Intent;
 import android.media.AudioAttributes;
 import android.media.SoundPool;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -39,12 +42,24 @@ public class simon_extreme extends MainActivity implements View.OnClickListener 
     private int yellowID;
     private int purpleID;
     private int orangeID;
-
+    private Handler handler;
+    private int score = 0;
+    private TextView scoreTV;
+    private Button home;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_simon_extreme);
+        home = findViewById(R.id.btn_home);
+        scoreTV = findViewById(R.id.tv_score);
 
+        home.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                startActivity(intent);
+            }
+        });
         simonsPattern = new ArrayList<>();
 
         red = findViewById(R.id.btn_red1);
@@ -181,7 +196,8 @@ public class simon_extreme extends MainActivity implements View.OnClickListener 
                 Toast.makeText(simon_extreme.this, "End Of Game", Toast.LENGTH_SHORT).show();
             }
         }, 200);
-
+        ZeroScore();
+        home.setVisibility(View.VISIBLE);
     }
 
     private void nextRound() {
@@ -204,6 +220,7 @@ public class simon_extreme extends MainActivity implements View.OnClickListener 
                     playSimonsPattern();
                 }
             }, 1500);
+            AddToScore();
         }
     }
 
@@ -332,6 +349,15 @@ public class simon_extreme extends MainActivity implements View.OnClickListener 
             soundPool.play(soundId, 1.0f, 1.0f, 0, 0, 1.0f);
         }
     }
-
+    private int AddToScore(){
+        score++;
+        scoreTV.setText(String.valueOf(score));
+        return score;
+    }
+    private int ZeroScore(){
+        score=0;
+        scoreTV.setText(String.valueOf(score));
+        return score;
+    }
 
 }
