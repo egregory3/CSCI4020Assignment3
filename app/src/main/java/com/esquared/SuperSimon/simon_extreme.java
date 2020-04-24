@@ -1,3 +1,8 @@
+//Eric Gregory and Eric Raymond
+//CSCI 4020, Fall 2020
+//Professor John Nicholson
+//Assignment 3
+
 package com.esquared.SuperSimon;
 
 import android.content.Intent;
@@ -19,20 +24,21 @@ import java.util.Random;
 public class simon_extreme extends MainActivity implements View.OnClickListener {
 
     private ArrayList<Integer> simonsPattern;
+    private View[] views;
+    private HashSet<Integer> soundsLoaded;
+    private Handler handler;
+    private SoundPool soundPool;
+    private ImageView green;
     private ImageView red;
     private ImageView blue;
-    private ImageView green;
     private ImageView yellow;
     private ImageView purple;
     private ImageView orange;
-    private View[] views;
     private int indice;
     private boolean userTurn;
-    private SoundPool soundPool;
-    private HashSet<Integer> soundsLoaded;
+    private int greenID;
     private int redID;
     private int blueID;
-    private int greenID;
     private int yellowID;
     private int purpleID;
     private int orangeID;
@@ -40,7 +46,6 @@ public class simon_extreme extends MainActivity implements View.OnClickListener 
     private int score = 0;
     private TextView scoreTV;
     private Button home;
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -81,13 +86,12 @@ public class simon_extreme extends MainActivity implements View.OnClickListener 
             public void run() {
                 playSimonsPattern();
             }
-        }, 1500);
+        }, 1000);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-
         AudioAttributes.Builder attrBuilder = new AudioAttributes.Builder();
         attrBuilder.setUsage(AudioAttributes.USAGE_GAME);
         SoundPool.Builder spBuilder = new SoundPool.Builder();
@@ -105,12 +109,12 @@ public class simon_extreme extends MainActivity implements View.OnClickListener 
                 }
             }
         });
+        greenID = soundPool.load(this, R.raw.green, 1);
         redID= soundPool.load(this, R.raw.red, 1);
         blueID = soundPool.load(this, R.raw.blue, 1);
-        greenID = soundPool.load(this, R.raw.green, 1);
         yellowID = soundPool.load(this, R.raw.yellow, 1);
-        purpleID= soundPool.load(this, R.raw.blue, 1);
-        orangeID= soundPool.load(this, R.raw.red, 1);
+        purpleID= soundPool.load(this, R.raw.purple, 1);
+        orangeID= soundPool.load(this, R.raw.orange, 1);
 
     }
 
@@ -142,7 +146,7 @@ public class simon_extreme extends MainActivity implements View.OnClickListener 
                 public void run() {
                     playSimonsPattern();
                 }
-            }, 1500);
+            }, 900);
         } else {
             //Reverse the array
             // reversedPattern=reversePattern(simonsPattern);
@@ -215,7 +219,7 @@ public class simon_extreme extends MainActivity implements View.OnClickListener 
                 public void run() {
                     playSimonsPattern();
                 }
-            }, 2000);
+            }, 1500);
             AddToScore();
         }
     }
