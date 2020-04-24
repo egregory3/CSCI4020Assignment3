@@ -9,12 +9,14 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Random;
 
 public class simon_rewind extends MainActivity implements View.OnClickListener {
 
     private ArrayList<Integer> simonsPattern;
+    private ArrayList<Integer> reversedPattern;
     private ImageView red;
     private ImageView blue;
     private ImageView green;
@@ -114,6 +116,8 @@ public class simon_rewind extends MainActivity implements View.OnClickListener {
                 }
             }, 1500);
         } else {
+            //Reverse the array
+           // reversedPattern=reversePattern(simonsPattern);
             userTurn = true;
             enableUserInput(views);
             indice = 0;
@@ -123,7 +127,7 @@ public class simon_rewind extends MainActivity implements View.OnClickListener {
     @Override
     public void onClick(View v) {
         if(userTurn==true) {
-            if (comparePattern(simonsPattern, indice, v )) {
+            if (comparePattern(reversedPattern, indice, v )) {
                 nextRound();
             } else {
                 gameOver();
@@ -239,6 +243,14 @@ public class simon_rewind extends MainActivity implements View.OnClickListener {
         }, 550);
     }
 
+    private ArrayList<Integer> reversePattern(ArrayList<Integer> inputPattern) {
+
+        ArrayList<Integer> temp=new ArrayList<>();
+        for (int i = inputPattern.size() - 1; i >= 0; i--) {
+            temp.add(inputPattern.get(i));
+        }
+        return temp;
+    }
 
     private boolean comparePattern( ArrayList<Integer> simonsPattern, int index, View view) {
         int value= Integer.valueOf((String) view.getTag());
@@ -253,7 +265,6 @@ public class simon_rewind extends MainActivity implements View.OnClickListener {
         Random r= new Random();
         int value =r.nextInt(4)+1;
         simonsPattern.add(value);
-
     }
 
    private void disableUserInput(View[] v) {
