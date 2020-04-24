@@ -77,7 +77,7 @@ public class simon_rewind extends MainActivity implements View.OnClickListener {
             public void run() {
                 playSimonsPattern();
             }
-        }, 1500);
+        }, 1000);
     }
 
     @Override
@@ -130,7 +130,7 @@ public class simon_rewind extends MainActivity implements View.OnClickListener {
                 public void run() {
                     playSimonsPattern();
                 }
-            }, 1500);
+            }, 900);
         } else {
             //Reverse the array
             reversedPattern=reversePattern(simonsPattern);
@@ -200,7 +200,7 @@ public class simon_rewind extends MainActivity implements View.OnClickListener {
                 public void run() {
                     playSimonsPattern();
                 }
-            }, 2000);
+            }, 1500);
         }
     }
 

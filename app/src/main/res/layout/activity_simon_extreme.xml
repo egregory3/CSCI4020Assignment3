@@ -107,7 +107,7 @@
             android:background="@drawable/button_orange"
             android:clickable="true"
             android:gravity="center"
-            android:tag="5"
+            android:tag="6"
             android:textColor="@android:color/white"
             android:textSize="20sp"></ImageView>
 

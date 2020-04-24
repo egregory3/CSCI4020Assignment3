@@ -59,7 +59,7 @@ public class simon_surprise extends MainActivity implements View.OnClickListener
             public void run() {
                 playSimonsPattern();
             }
-        }, 1500);
+        }, 1000);
     }
 
     @Override
@@ -84,9 +84,9 @@ public class simon_surprise extends MainActivity implements View.OnClickListener
             }
         });
         redID= soundPool.load(this, R.raw.red, 1);
-        blueID = soundPool.load(this, R.raw.blue, 1);
-        greenID = soundPool.load(this, R.raw.green, 1);
-        yellowID = soundPool.load(this, R.raw.yellow, 1);
+        blueID = soundPool.load(this, R.raw.red, 1);
+        greenID = soundPool.load(this, R.raw.red, 1);
+        yellowID = soundPool.load(this, R.raw.red, 1);
 
     }
 
@@ -112,7 +112,7 @@ public class simon_surprise extends MainActivity implements View.OnClickListener
                 public void run() {
                     playSimonsPattern();
                 }
-            }, 1500);
+            }, 900);
         } else {
             userTurn = true;
             enableUserInput(views);
