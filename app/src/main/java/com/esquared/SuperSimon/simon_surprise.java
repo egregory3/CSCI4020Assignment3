@@ -40,7 +40,7 @@ public class simon_surprise extends MainActivity implements View.OnClickListener
         one = findViewById(R.id.btn_one);
         two = findViewById(R.id.btn_two);
         three = findViewById(R.id.btn_three);
-        four = findViewById(R.id.btn_yellow1);
+        four = findViewById(R.id.btn_four);
         soundsLoaded = new HashSet<>();
         views = new View[]{one, two, three, four};
 
@@ -129,16 +129,16 @@ public class simon_surprise extends MainActivity implements View.OnClickListener
                 gameOver();
             }
             switch (v.getId()) {
-                case R.id.btn_green1:
+                case R.id.btn_one:
                     greenAction();
                     break;
-                case R.id.btn_red1:
+                case R.id.btn_two:
                     redAction();
                     break;
-                case R.id.btn_blue1:
+                case R.id.btn_three:
                     blueAction();
                     break;
-                case R.id.btn_yellow1:
+                case R.id.btn_four:
                     yellowAction();
                     break;
             }
@@ -195,46 +195,51 @@ public class simon_surprise extends MainActivity implements View.OnClickListener
 
     }
 
+
+
+    private void greenAction() {
+        one.setImageResource(R.drawable.button_black_down);
+        playSound(greenID);
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                one.setImageResource(R.drawable.button_black);
+            }
+        }, 550);
+    }
+
+
     private void redAction() {
-        one.setImageResource(R.drawable.button_red_down);
+        two.setImageResource(R.drawable.button_black_down);
         playSound(redID);
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                one.setImageResource(R.drawable.button_red);
+                two.setImageResource(R.drawable.button_black);
             }
         }, 550);
     }
 
     private void blueAction() {
-        two.setImageResource(R.drawable.button_blue_down);
+        three.setImageResource(R.drawable.button_black_down);
         playSound(blueID);
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                two.setImageResource(R.drawable.button_blue);
+                three.setImageResource(R.drawable.button_black);
             }
         }, 550);
     }
 
-    private void greenAction() {
-        three.setImageResource(R.drawable.button_green_down);
-        playSound(greenID);
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                three.setImageResource(R.drawable.button_green);
-            }
-        }, 550);
-    }
+
 
     private void yellowAction() {
-        four.setImageResource(R.drawable.button_yellow_down);
+        four.setImageResource(R.drawable.button_black_down);
         playSound(yellowID);
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                four.setImageResource(R.drawable.button_yellow);
+                four.setImageResource(R.drawable.button_black);
             }
         }, 550);
     }
