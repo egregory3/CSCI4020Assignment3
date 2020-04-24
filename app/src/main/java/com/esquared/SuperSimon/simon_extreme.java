@@ -72,7 +72,6 @@ public class simon_extreme extends MainActivity implements View.OnClickListener 
     @Override
     protected void onResume() {
         super.onResume();
-
         AudioAttributes.Builder attrBuilder = new AudioAttributes.Builder();
         attrBuilder.setUsage(AudioAttributes.USAGE_GAME);
         SoundPool.Builder spBuilder = new SoundPool.Builder();
@@ -90,12 +89,12 @@ public class simon_extreme extends MainActivity implements View.OnClickListener 
                 }
             }
         });
+        greenID = soundPool.load(this, R.raw.green, 1);
         redID= soundPool.load(this, R.raw.red, 1);
         blueID = soundPool.load(this, R.raw.blue, 1);
-        greenID = soundPool.load(this, R.raw.green, 1);
         yellowID = soundPool.load(this, R.raw.yellow, 1);
-        purpleID= soundPool.load(this, R.raw.blue, 1);
-        orangeID= soundPool.load(this, R.raw.red, 1);
+        purpleID= soundPool.load(this, R.raw.purple, 1);
+        orangeID= soundPool.load(this, R.raw.orange, 1);
 
     }
 

@@ -83,10 +83,10 @@ public class simon_surprise extends MainActivity implements View.OnClickListener
                 }
             }
         });
+        greenID = soundPool.load(this, R.raw.green, 1);
         redID= soundPool.load(this, R.raw.red, 1);
-        blueID = soundPool.load(this, R.raw.red, 1);
-        greenID = soundPool.load(this, R.raw.red, 1);
-        yellowID = soundPool.load(this, R.raw.red, 1);
+        blueID = soundPool.load(this, R.raw.blue, 1);
+        yellowID = soundPool.load(this, R.raw.yellow, 1);
 
     }
 
