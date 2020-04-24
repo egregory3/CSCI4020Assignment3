@@ -1,3 +1,8 @@
+//Eric Gregory and Eric Raymond
+//CSCI 4020, Fall 2020
+//Professor John Nicholson
+//Assignment 3
+
 package com.esquared.SuperSimon;
 
 import android.content.Intent;
@@ -20,20 +25,21 @@ public class simon_rewind extends MainActivity implements View.OnClickListener {
 
     private ArrayList<Integer> simonsPattern;
     private ArrayList<Integer> reversedPattern;
+    private View[] views;
+    private HashSet<Integer> soundsLoaded;
+    private Handler handler;
+    private SoundPool soundPool;
+    private ImageView green;
     private ImageView red;
     private ImageView blue;
-    private ImageView green;
     private ImageView yellow;
-    private View[] views;
     private int indice;
     private boolean userTurn;
-    private SoundPool soundPool;
-    private HashSet<Integer> soundsLoaded;
+    private int greenID;
     private int redID;
     private int blueID;
-    private int greenID;
     private int yellowID;
-    private Handler handler;
+
     int score = 0;
     TextView scoreTV;
     Button home;
@@ -77,7 +83,7 @@ public class simon_rewind extends MainActivity implements View.OnClickListener {
             public void run() {
                 playSimonsPattern();
             }
-        }, 1500);
+        }, 1000);
     }
 
     @Override
@@ -101,9 +107,9 @@ public class simon_rewind extends MainActivity implements View.OnClickListener {
                 }
             }
         });
+        greenID = soundPool.load(this, R.raw.green, 1);
         redID= soundPool.load(this, R.raw.red, 1);
         blueID = soundPool.load(this, R.raw.blue, 1);
-        greenID = soundPool.load(this, R.raw.green, 1);
         yellowID = soundPool.load(this, R.raw.yellow, 1);
 
     }
@@ -130,7 +136,7 @@ public class simon_rewind extends MainActivity implements View.OnClickListener {
                 public void run() {
                     playSimonsPattern();
                 }
-            }, 1500);
+            }, 900);
         } else {
             //Reverse the array
             reversedPattern=reversePattern(simonsPattern);
@@ -200,7 +206,7 @@ public class simon_rewind extends MainActivity implements View.OnClickListener {
                 public void run() {
                     playSimonsPattern();
                 }
-            }, 2000);
+            }, 1500);
         }
     }
 
