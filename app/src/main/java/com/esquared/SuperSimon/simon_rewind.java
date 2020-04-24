@@ -44,7 +44,6 @@ public class simon_rewind extends MainActivity implements View.OnClickListener {
         soundsLoaded = new HashSet<>();
         views = new View[]{red, blue, green, yellow};
 
-
         for (int i = 0; i < views.length; i++) {
             views[i].setOnClickListener(this);
         }
@@ -92,7 +91,6 @@ public class simon_rewind extends MainActivity implements View.OnClickListener {
     }
 
     private void playSimonsPattern() {
-        //display sequence to player
         switch (simonsPattern.get(indice)){
             case 1:
                 greenAction();
