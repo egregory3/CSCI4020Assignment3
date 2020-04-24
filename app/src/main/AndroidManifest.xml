@@ -11,6 +11,7 @@
         android:theme="@style/AppTheme">
         <activity android:name=".simon_extreme"/>
         <activity android:name=".simon_rewind"/>
+        <activity android:name=".simon_surprise"/>
         <activity android:name=".simon_classic"></activity>
         <activity android:name=".MainActivity">
             <intent-filter>

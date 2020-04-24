@@ -12,18 +12,16 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.Random;
 
-public class simon_rewind extends MainActivity implements View.OnClickListener {
+public class simon_surprise extends MainActivity implements View.OnClickListener {
 
     private ArrayList<Integer> simonsPattern;
-    private ArrayList<Integer> reversedPattern;
-    private ImageView red;
-    private ImageView blue;
-    private ImageView green;
-    private ImageView yellow;
+    private ImageView one;
+    private ImageView two;
+    private ImageView three;
+    private ImageView four;
     private View[] views;
     private int indice;
     private boolean userTurn;
@@ -34,33 +32,32 @@ public class simon_rewind extends MainActivity implements View.OnClickListener {
     private int greenID;
     private int yellowID;
     private Handler handler;
-    int score = 0;
-    TextView scoreTV;
+    private int score = 0;
+    private TextView scoreTV;
     Button home;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.acitivy_simon_rewind);
-        scoreTV = findViewById(R.id.textView2);
-        simonsPattern = new ArrayList<>();
-        home = findViewById(R.id.buttonHome);
-        home = findViewById(R.id.buttonHome);
+        setContentView(R.layout.activity_simon_surprise);
+        home = findViewById(R.id.buttonHomeSS);
         home.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                 startActivity(intent);
-
             }
         });
 
-        red = findViewById(R.id.btn_red1);
-        blue = findViewById(R.id.btn_blue1);
-        green = findViewById(R.id.btn_green1);
-        yellow = findViewById(R.id.btn_yellow1);
+        scoreTV = findViewById(R.id.tv_score);
+        simonsPattern = new ArrayList<>();
+
+        one = findViewById(R.id.btn_one);
+        two = findViewById(R.id.btn_two);
+        three = findViewById(R.id.btn_three);
+        four = findViewById(R.id.btn_four);
         soundsLoaded = new HashSet<>();
-        views = new View[]{red, blue, green, yellow};
+        views = new View[]{one, two, three, four};
 
         for (int i = 0; i < views.length; i++) {
             views[i].setOnClickListener(this);
@@ -132,8 +129,6 @@ public class simon_rewind extends MainActivity implements View.OnClickListener {
                 }
             }, 1500);
         } else {
-            //Reverse the array
-            reversedPattern=reversePattern(simonsPattern);
             userTurn = true;
             enableUserInput(views);
             indice = 0;
@@ -143,22 +138,22 @@ public class simon_rewind extends MainActivity implements View.OnClickListener {
     @Override
     public void onClick(View v) {
         if(userTurn==true) {
-            if (comparePattern(reversedPattern, indice, v )) {
+            if (comparePattern(simonsPattern, indice, v )) {
                 nextRound();
             } else {
                 gameOver();
             }
             switch (v.getId()) {
-                case R.id.btn_green1:
+                case R.id.btn_one:
                     greenAction();
                     break;
-                case R.id.btn_red1:
+                case R.id.btn_two:
                     redAction();
                     break;
-                case R.id.btn_blue1:
+                case R.id.btn_three:
                     blueAction();
                     break;
-                case R.id.btn_yellow1:
+                case R.id.btn_four:
                     yellowAction();
                     break;
             }
@@ -171,12 +166,12 @@ public class simon_rewind extends MainActivity implements View.OnClickListener {
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                Toast.makeText(simon_rewind.this, "End Of Game", Toast.LENGTH_SHORT).show();
+                Toast.makeText(simon_surprise.this, "End Of Game", Toast.LENGTH_SHORT).show();
             }
         }, 200);
         ZeroScore();
-        scoreTV.setText(String.valueOf(score));
         home.setVisibility(View.VISIBLE);
+
     }
 
     private void nextRound() {
@@ -186,13 +181,11 @@ public class simon_rewind extends MainActivity implements View.OnClickListener {
             (new Handler()).postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    Toast.makeText(simon_rewind.this, "Round Won", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(simon_surprise.this, "Round Won", Toast.LENGTH_SHORT).show();
                 }
             }, 1000);
             indice = 0;
             userTurn = false;
-            AddToScore();
-            scoreTV.setText(String.valueOf(score));
             disableUserInput(views);
             increaseSimonPattern(simonsPattern);
             (new Handler()).postDelayed(new Runnable() {
@@ -201,6 +194,7 @@ public class simon_rewind extends MainActivity implements View.OnClickListener {
                     playSimonsPattern();
                 }
             }, 2000);
+            AddToScore();
         }
     }
 
@@ -219,58 +213,55 @@ public class simon_rewind extends MainActivity implements View.OnClickListener {
 
     }
 
+
+
+    private void greenAction() {
+        one.setImageResource(R.drawable.button_black_down);
+        playSound(greenID);
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                one.setImageResource(R.drawable.button_black);
+            }
+        }, 550);
+    }
+
+
     private void redAction() {
-        red.setImageResource(R.drawable.button_red_down);
+        two.setImageResource(R.drawable.button_black_down);
         playSound(redID);
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                red.setImageResource(R.drawable.button_red);
+                two.setImageResource(R.drawable.button_black);
             }
         }, 550);
     }
 
     private void blueAction() {
-        blue.setImageResource(R.drawable.button_blue_down);
+        three.setImageResource(R.drawable.button_black_down);
         playSound(blueID);
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                blue.setImageResource(R.drawable.button_blue);
+                three.setImageResource(R.drawable.button_black);
             }
         }, 550);
     }
 
-    private void greenAction() {
-        green.setImageResource(R.drawable.button_green_down);
-        playSound(greenID);
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                green.setImageResource(R.drawable.button_green);
-            }
-        }, 550);
-    }
+
 
     private void yellowAction() {
-        yellow.setImageResource(R.drawable.button_yellow_down);
+        four.setImageResource(R.drawable.button_black_down);
         playSound(yellowID);
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                yellow.setImageResource(R.drawable.button_yellow);
+                four.setImageResource(R.drawable.button_black);
             }
         }, 550);
     }
 
-    private ArrayList<Integer> reversePattern(ArrayList<Integer> inputPattern) {
-
-        ArrayList<Integer> temp=new ArrayList<>();
-        for (int i = inputPattern.size() - 1; i >= 0; i--) {
-            temp.add(inputPattern.get(i));
-        }
-        return temp;
-    }
 
     private boolean comparePattern( ArrayList<Integer> simonsPattern, int index, View view) {
         int value= Integer.valueOf((String) view.getTag());
@@ -316,4 +307,5 @@ public class simon_rewind extends MainActivity implements View.OnClickListener {
         scoreTV.setText(String.valueOf(score));
         return score;
     }
+
 }

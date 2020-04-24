@@ -51,10 +51,13 @@ public class MainActivity extends AppCompatActivity {
 
         Button yellow = findViewById(R.id.btn_yellow);
         addClickEffect(yellow);
+        yellow.setText("Simon Suprise");
         yellow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent intent = new Intent(getApplicationContext(), simon_surprise.class);
+                intent.putExtra("Score", 0);
+                startActivity(intent);
             }
         });
     }

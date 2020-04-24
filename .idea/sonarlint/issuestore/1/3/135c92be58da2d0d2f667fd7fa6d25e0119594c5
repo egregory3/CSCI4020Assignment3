@@ -1,25 +1,22 @@
 
-T
-java:S1128"2Remove this unused import 'android.widget.Switch'.(¬Ü´¹üÿÿÿÿ8™˜èğ˜.
-O
-java:S1199N"-Extract this nested code block into a method.(Í‡¬‰úÿÿÿÿ8ÇÄ‘ù˜.
-O
-java:S1199T"-Extract this nested code block into a method.(·ÿ½äûÿÿÿÿ8í“ù˜.
-h	java:S101"MRename this class name to match the regular expression '^[A-Z][a-zA-Z0-9]*$'.(ß¬Ÿ_8™˜èğ˜.
-u
-java:S22933"YReplace the type specification in this constructor call with the diamond operator ("<>").(À©¼8™˜èğ˜.
->	java:S131M""Add a default case to this switch.(ÕÅÄŞ8ÇÄ‘ù˜.
-t	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(¡…Êşÿÿÿÿ
-[
-java:S1128"ERemove this unused import 'androidx.appcompat.app.AppCompatActivity'.(€¶£î
+p	java:S100²"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(…Åø“üÿÿÿÿ8ìŞ‰Òš.
+K
+java:S1125"(Remove the literal "true" boolean value.(šßµáıÿÿÿÿ8ìŞ‰Òš.
 W
-java:S1128"5Remove this unused import 'android.view.MotionEvent'.(˜šËŞúÿÿÿÿ8™˜èğ˜.
-N
-java:S1128"1Remove this unused import 'android.os.AsyncTask'.(À»¥—8ÑÍîø˜.
-o	java:S116$"SRename this field "tv_score" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ƒ€²­8ïç‘ø˜.
-O
-java:S1199X"-Extract this nested code block into a method.(ğÁ–Óûÿÿÿÿ8³¸–ù˜.
-O
-java:S1199\"-Extract this nested code block into a method.(úÀôãùÿÿÿÿ8³¸–ù˜.
-v
-java:S2293"YReplace the type specification in this constructor call with the diamond operator ("<>").(öúƒ8™˜èğ˜.
+java:S2130"9Use "Integer.parseInt" for this string-to-int conversion.(ÎËª8ìŞ‰Òš.
+¤
+java:S1186Ö"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(œƒƒ©ùÿÿÿÿ8¢§çÑš.
+_
+java:S1126‘"AReplace this if-then-else statement by a single return statement.(ƒ‡ââ8ìŞ‰Òš.
+>	java:S131l""Add a default case to this switch.(ØÆşù8ìŞ‰Òš.
+p	java:S100·"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(åîçİûÿÿÿÿ8êí—Òš.
+D	java:S131“""Add a default case to this switch.(×“¾ñùÿÿÿÿ8ìŞ‰Òš.
+T
+java:S1128"2Remove this unused import 'java.util.Collections'.(¢³ïÓşÿÿÿÿ8¢§çÑš.
+^	java:S125„"<This block of commented-out lines of code should be removed.(Íå–ÿÿÿÿÿ8ìŞ‰Òš.
+t	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(¡…Êşÿÿÿÿ
+V
+java:S1144†"3Remove this unused private "reversePattern" method.(ÒŸ„‡ùÿÿÿÿ8ìŞ‰Òš.
+<
+java:S2119™"Save and re-use this "Random".(¡Å”¦8ìŞ‰Òš.
+n	java:S101"MRename this class name to match the regular expression '^[A-Z][a-zA-Z0-9]*$'.(º˜Òßûÿÿÿÿ8¢§çÑš.
