@@ -63,6 +63,7 @@ public class MainActivity extends AppCompatActivity {
 
         Button yellow = findViewById(R.id.btn_yellow);
         addClickEffect(yellow);
+        yellow.setText("Simon Suprise");
         yellow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
