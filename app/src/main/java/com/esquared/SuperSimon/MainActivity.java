@@ -66,6 +66,7 @@ public class MainActivity extends AppCompatActivity {
                 });
                 final AlertDialog rewindAlert = dialog.create();
                 rewindAlert.show();
+=
             }
         });
 
@@ -90,6 +91,7 @@ public class MainActivity extends AppCompatActivity {
                 extremeAlert.show();
             }
         });
+
 
 
 
