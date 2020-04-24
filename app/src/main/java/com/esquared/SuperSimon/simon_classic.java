@@ -1,12 +1,15 @@
 package com.esquared.SuperSimon;
 
+import android.content.Intent;
 import android.media.AudioAttributes;
 import android.media.SoundPool;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -30,14 +33,16 @@ public class simon_classic extends MainActivity implements View.OnClickListener 
     private int greenID;
     private int yellowID;
     private Handler handler;
-
+    int score = 0;
+    TextView scoreTV;
+    Button home;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_simon_classic);
-
+        scoreTV = findViewById(R.id.tv_score);
         simonsPattern = new ArrayList<>();
-
+        home = findViewById(R.id.buttonHome);
         red = findViewById(R.id.btn_red1);
         blue = findViewById(R.id.btn_blue1);
         green = findViewById(R.id.btn_green1);
@@ -49,6 +54,14 @@ public class simon_classic extends MainActivity implements View.OnClickListener 
             views[i].setOnClickListener(this);
         }
 
+        home.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                startActivity(intent);
+
+            }
+        });
         //START OF GAME AFTER CREATION
         indice = 0;
         userTurn = false;
@@ -157,7 +170,8 @@ public class simon_classic extends MainActivity implements View.OnClickListener 
                 Toast.makeText(simon_classic.this, "End Of Game", Toast.LENGTH_SHORT).show();
             }
         }, 200);
-
+        ZeroScore();
+        home.setVisibility(View.VISIBLE);
     }
 
     private void nextRound() {
@@ -167,10 +181,13 @@ public class simon_classic extends MainActivity implements View.OnClickListener 
             (new Handler()).postDelayed(new Runnable() {
                 @Override
                 public void run() {
+
                     Toast.makeText(simon_classic.this, "Round Won", Toast.LENGTH_SHORT).show();
+
                 }
             }, 1000);
             indice = 0;
+            AddToScore();
             userTurn = false;
             disableUserInput(views);
             increaseSimonPattern(simonsPattern);
@@ -285,4 +302,16 @@ public class simon_classic extends MainActivity implements View.OnClickListener 
             soundPool.play(soundId, 1.0f, 1.0f, 0, 0, 1.0f);
         }
     }
+
+    private int AddToScore(){
+        score++;
+        scoreTV.setText(String.valueOf(score));
+        return score;
+    }
+    private int ZeroScore(){
+        score=0;
+        scoreTV.setText(String.valueOf(score));
+        return score;
+    }
+
 }
