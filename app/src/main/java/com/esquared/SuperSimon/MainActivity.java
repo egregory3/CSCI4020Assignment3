@@ -63,11 +63,10 @@ public class MainActivity extends AppCompatActivity {
 
         Button yellow = findViewById(R.id.btn_yellow);
         addClickEffect(yellow);
-
         yellow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(MainActivity.this, "Button Press Added", Toast.LENGTH_SHORT).show();
+
             }
         });
     }
@@ -83,17 +82,17 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    void addClickEffect(View v)
+    void addClickEffect(Button b)
     {
-        Drawable dN = v.getBackground();
-        Drawable dP = v.getBackground().getConstantState().newDrawable();
+        Drawable dN = b.getBackground();
+        Drawable dP = b.getBackground().getConstantState().newDrawable();
         dP.mutate();
         dP.setColorFilter(new LightingColorFilter(0x77777777, 0x77777777));
 
         StateListDrawable lD = new StateListDrawable();
         lD.addState(new int[] {android.R.attr.state_pressed}, dP);
         lD.addState(new int[] {}, dN);
-        v.setBackground(lD);
+        b.setBackground(lD);
     }
 
 

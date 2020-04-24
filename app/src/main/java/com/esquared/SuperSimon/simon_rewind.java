@@ -2,230 +2,279 @@ package com.esquared.SuperSimon;
 
 import android.media.AudioAttributes;
 import android.media.SoundPool;
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.CountDownTimer;
 import android.os.Handler;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
-
-import androidx.appcompat.app.AppCompatActivity;
-
-import java.io.IOError;
-import java.io.IOException;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Random;
-import java.util.Set;
-import java.util.Timer;
-import java.util.TimerTask;
 
-import static android.view.View.*;
-
-public class simon_rewind extends AppCompatActivity implements View.OnClickListener{
-
-    private View[] views;
+public class simon_rewind extends MainActivity implements View.OnClickListener {
 
     private ArrayList<Integer> simonsPattern;
-    private ImageView green;
     private ImageView red;
     private ImageView blue;
+    private ImageView green;
     private ImageView yellow;
-    private int placeHolder;
-
-    private Button start;
-
-
-
-    private Boolean userTurn;
-
-
-
-    private Random random=new Random();
+    private View[] views;
+    private int indice;
+    private boolean userTurn;
+    private SoundPool soundPool;
+    private HashSet<Integer> soundsLoaded;
+    private int redID;
+    private int blueID;
+    private int greenID;
+    private int yellowID;
     private Handler handler;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.acitivy_simon_rewind);
 
-        simonsPattern = new ArrayList<Integer>();
-
-        green = findViewById(R.id.btn_green1);
+        simonsPattern = new ArrayList<>();
+        
         red = findViewById(R.id.btn_red1);
         blue = findViewById(R.id.btn_blue1);
+        green = findViewById(R.id.btn_green1);
         yellow = findViewById(R.id.btn_yellow1);
-        start = findViewById(R.id.btnStart1);
-        start.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                handler = new Handler();
-                handler.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        playPattern();
-                    }
-                }, 1500);
-            }
+        soundsLoaded = new HashSet<>();
+        views = new View[]{red, blue, green, yellow};
 
-        });
 
-        views=new View[]{green,red,blue,yellow};
-        for(int i=0;i<views.length;i++){
-           views[i].setOnClickListener(this);
+        for (int i = 0; i < views.length; i++) {
+            views[i].setOnClickListener(this);
         }
 
-        placeHolder=0;
-        userTurn=false;
-
-        addRandom();
-
+        //START OF GAME AFTER CREATION
+        indice = 0;
+        userTurn = false;
+        increaseSimonPattern(simonsPattern);
+        disableUserInput(views);
         handler = new Handler();
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                nextRound();
+                playSimonsPattern();
             }
         }, 1500);
     }
 
-    public void playPattern(){
-        switch(simonsPattern.get(placeHolder)) {
-            case 0:{
-                pressGreen();
-                break;
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        AudioAttributes.Builder attrBuilder = new AudioAttributes.Builder();
+        attrBuilder.setUsage(AudioAttributes.USAGE_GAME);
+        SoundPool.Builder spBuilder = new SoundPool.Builder();
+        spBuilder.setAudioAttributes(attrBuilder.build());
+        spBuilder.setMaxStreams(2);
+        soundPool = spBuilder.build();
+        soundPool.setOnLoadCompleteListener(new SoundPool.OnLoadCompleteListener() {
+            @Override
+            public void onLoadComplete(SoundPool soundPool, int sampleId, int status) {
+                if (status == 0) {
+                    soundsLoaded.add(sampleId);
+                    Log.i("SOUND", "Sound loaded " + sampleId);
+                } else {
+                    Log.i("SOUND", "Error cannot load sound status = " + status);
+                }
             }
-            case 1:{
-                pressRed();
+        });
+        redID= soundPool.load(this, R.raw.red, 1);
+        blueID = soundPool.load(this, R.raw.blue, 1);
+        greenID = soundPool.load(this, R.raw.green, 1);
+        yellowID = soundPool.load(this, R.raw.yellow, 1);
+
+    }
+
+    private void playSimonsPattern() {
+        //display sequence to player
+        switch (simonsPattern.get(indice)){
+            case 1:
+                greenAction();
                 break;
-            }
-            case 2:{
-                pressBlue();
+            case 2:
+                redAction();
                 break;
-            }
-            case 3:{
-                pressYellow();
+            case 3:
+                blueAction();
                 break;
-            }
+            case 4:
+                yellowAction();
+                break;
         }
-        placeHolder++;
-        if(placeHolder<simonsPattern.size()){
-            handler= new Handler();
-            handler.postDelayed(new Runnable() {
+        indice++;
+        if (indice < simonsPattern.size()) {
+            (new Handler()).postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    playPattern();
+                    playSimonsPattern();
                 }
-            }, 1000);
-        }else{
-            userTurn=true;
-            placeHolder=0;
+            }, 1500);
+        } else {
+            userTurn = true;
+            enableUserInput(views);
+            indice = 0;
         }
     }
 
+    @Override
+    public void onClick(View v) {
+        if(userTurn==true) {
+            if (comparePattern(simonsPattern, indice, v )) {
+                nextRound();
+            } else {
+                gameOver();
+            }
+            switch (v.getId()) {
+                case R.id.btn_green1:
+                    greenAction();
+                    break;
+                case R.id.btn_red1:
+                    redAction();
+                    break;
+                case R.id.btn_blue1:
+                    blueAction();
+                    break;
+                case R.id.btn_yellow1:
+                    yellowAction();
+                    break;
+            }
+        }
+    }
 
-    //Animation and sound for the green button
-    private void pressGreen(){
-        green.setImageResource(R.drawable.button_green_down);
-        //playSound
-        handler = new Handler();
+    private void gameOver() {
+        indice = 0;
+        userTurn = false;
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                green.setImageResource(R.drawable.button_green);
+                Toast.makeText(simon_rewind.this, "End Of Game", Toast.LENGTH_SHORT).show();
             }
-        },600);
+        }, 200);
+
     }
 
-    //Animation and sound for the red button
-    private void pressRed(){
+    private void nextRound() {
+
+        indice++;
+        if (simonsPattern.size() == indice) {
+            (new Handler()).postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    Toast.makeText(simon_rewind.this, "Round Won", Toast.LENGTH_SHORT).show();
+                }
+            }, 1000);
+            indice = 0;
+            userTurn = false;
+            disableUserInput(views);
+            increaseSimonPattern(simonsPattern);
+            (new Handler()).postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    playSimonsPattern();
+                }
+            }, 2000);
+        }
+    }
+    
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if (soundPool != null) {
+            soundPool.release();
+            soundPool = null;
+            soundsLoaded.clear();
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+
+    }
+
+    private void redAction() {
         red.setImageResource(R.drawable.button_red_down);
-        //playSound
-        handler = new Handler();
+        playSound(redID);
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
                 red.setImageResource(R.drawable.button_red);
             }
-        },600);
+        }, 550);
     }
 
-    //Animation and sound for the blue button
-    private void pressBlue(){
+    private void blueAction() {
         blue.setImageResource(R.drawable.button_blue_down);
-        //playSound
-        handler = new Handler();
+        playSound(blueID);
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
                 blue.setImageResource(R.drawable.button_blue);
             }
-        },600);
+        }, 550);
     }
 
-   //Animation and sound for the yellow button
-    private void pressYellow(){
+    private void greenAction() {
+        green.setImageResource(R.drawable.button_green_down);
+        playSound(greenID);
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                green.setImageResource(R.drawable.button_green);
+            }
+        }, 550);
+    }
+
+    private void yellowAction() {
         yellow.setImageResource(R.drawable.button_yellow_down);
-        //playSound
-        handler = new Handler();
+        playSound(yellowID);
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
                 yellow.setImageResource(R.drawable.button_yellow);
             }
-        },600);
+        }, 550);
     }
 
-    @Override
-    public void onClick(View view) {
-        if (userTurn==true) {
-            if (checkPattern(simonsPattern,placeHolder,view)){
-                nextRound();
-            }else {
-                gameOver();
-            }
-            //getSound(view);
+
+    private boolean comparePattern( ArrayList<Integer> simonsPattern, int index, View view) {
+        int value= Integer.valueOf((String) view.getTag());
+        if (simonsPattern.get(index) == value) {
+            return true;
+        } else {
+            return false;
         }
     }
 
-    private void addRandom(){
-        simonsPattern.add(random.nextInt(4));
+    private void increaseSimonPattern(ArrayList<Integer> simonsPattern) {
+        Random r= new Random();
+        int value =r.nextInt(4)+1;
+        simonsPattern.add(value);
+
     }
 
-    private boolean checkPattern (ArrayList<Integer> simonsPattern,int placeHolder,View view){
-       this.simonsPattern=simonsPattern;
-       this.placeHolder=placeHolder;
-       if(simonsPattern.get(placeHolder)==view.getTag()){
-                return true;
-       }else{
-           return false;
-       }
+   private void disableUserInput(View[] v) {
+        for (int i = 0; i < v.length; i++) {
+            v[i].setEnabled(false);
+        }
     }
 
-    private void nextRound(){
-        placeHolder++;
-        if(placeHolder==simonsPattern.size())
-            Toast.makeText(simon_rewind.this, "You Won The Round!", Toast.LENGTH_SHORT).show();
-        userTurn=false;
-        placeHolder=0;
-        addRandom();
-        (new Handler()).postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                playPattern();
-            }
-        }, 2000);
+    private void enableUserInput(View[] views) {
+        //enable entire game board
+        for (int i = 0; i < views.length; i++) {
+            views[i].setEnabled(true);
+        }
     }
 
-    private void gameOver(){
-        placeHolder = 0;
-        userTurn = false;
-        Toast.makeText(simon_rewind.this, "Button Press Added3", Toast.LENGTH_SHORT).show();
+    private void playSound(int soundId) {
+        //play required sound
+        if (soundsLoaded.contains(soundId)) {
+            soundPool.play(soundId, 1.0f, 1.0f, 0, 0, 1.0f);
+        }
     }
-
 }
