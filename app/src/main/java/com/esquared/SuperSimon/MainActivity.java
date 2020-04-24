@@ -1,8 +1,12 @@
+//Eric Gregory and Eric Raymond
+//CSCI 4020, Fall 2020
+//Professor John Nicholson
+//Assignment 3
+
 package com.esquared.SuperSimon;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.LightingColorFilter;
@@ -11,7 +15,6 @@ import android.graphics.drawable.StateListDrawable;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -107,10 +110,21 @@ public class MainActivity extends AppCompatActivity {
                         startActivity(intent);
                     }
                 });
-                final AlertDialog supriseAlert = dialog.create();
-                supriseAlert.show();
+                final AlertDialog surpriseAlert = dialog.create();
+                surpriseAlert.show();
             }
         });
+
+        Button creditsButton = findViewById(R.id.creditsButton);
+        creditsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v){
+                Intent intent = new Intent(getApplicationContext(), credits.class);
+                intent.putExtra("Score", 0);
+                startActivity(intent);
+            }
+        });
+
     }
     @Override
     protected void onResume() {
